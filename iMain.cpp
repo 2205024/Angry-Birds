@@ -15,12 +15,12 @@ void iDraw() {
 
 	iClear();
 
-	if(sc==0 || sc==1001)
+	if(sc==0 || sc==1001 || sc==1002 || sc==1003)
 	{
 		iShowBMP(0, 0, wp[1]);
 		//ager ta niche bame kona theke shuru hoto ar x 100 kore kore y 70 kore kore barto
-		if(sc!=1001) {
-		
+
+		if(sc==0) {
 		iSetColor(179, 136, 235); //lavendar
 		iSetColor(247, 174, 248); //pink
 		iSetColor(253, 197, 245); //lightpink
@@ -72,7 +72,8 @@ void iDraw() {
 		iSetColor(128, 147, 241); //blue
 		iFilledRectangle(cp1+15, cp2-45, 80, 30);
 		iSetColor(255, 255, 255);
-		iText(cp1+15+12, cp2-45+10, "CREDITS"); }
+		iText(cp1+15+12, cp2-45+10, "CREDITS"); 
+		}
 
 		// if(sc==0 && sc!=1001) {
 		// iSetColor(128, 147, 241); //blue
@@ -110,29 +111,9 @@ void iDraw() {
 		iSetColor(249, 42, 130); //rose
 		iText(cp1-300+45+20, cp2-250+45+510-30, "drag over the bird with mouse to aim", GLUT_BITMAP_HELVETICA_18);
 		iText(cp1-300+45+20, cp2-250+45+510-60, "Release mouse to shoot", GLUT_BITMAP_HELVETICA_18);
-
-		if(sc==1002) { //sensei instruction page
-		iSetColor(249, 42, 130); //rose
-		iSetColor(237, 123, 132); //light coral
-		iSetColor(245, 219, 203); //champagne pink
-
-		iSetColor(237, 123, 132); //light coral
-		iFilledRectangle(cp1-300, cp2-250, 600, 600);
-		iSetColor(245, 219, 203); //champagne pink
-		iFilledRectangle(cp1-300+15, cp2-250+15, 570, 570);
-		iSetColor(237, 123, 132); //light coral
-		iFilledRectangle(cp1-300+30, cp2-250+30, 540, 540);
-		iSetColor(245, 219, 203); //champagne pink
-		iFilledRectangle(cp1-300+45, cp2-250+45, 510, 510);
-		iSetColor(249, 42, 130); //rose
-		iFilledRectangle(cp1-300+450, cp2-250+45+20, 100, 20);
-		iSetColor(255, 255, 255);
-		iText(cp1-300+450+5, cp2-250+45+20+6, "MAIN MENU");
-		iSetColor(249, 42, 130); //rose
-		//iText(cp1-300+45+20, cp2-250+45+510-30, "drag over the bird with mouse to aim", GLUT_BITMAP_HELVETICA_18);
-		//iText(cp1-300+45+20, cp2-250+45+510-60, "Release mouse to shoot", GLUT_BITMAP_HELVETICA_18);
 		}
-		if(sc==1003) { //sensei instruction page
+
+		if(sc==1002) { //playlist
 		iSetColor(249, 42, 130); //rose
 		iSetColor(237, 123, 132); //light coral
 		iSetColor(245, 219, 203); //champagne pink
@@ -155,12 +136,35 @@ void iDraw() {
 		}
 
 
-		
-		
-		
-		
-		
+		if(sc==1003) { //credits
+		iSetColor(249, 42, 130); //rose
+		iSetColor(237, 123, 132); //light coral
+		iSetColor(245, 219, 203); //champagne pink
+
+		iSetColor(237, 123, 132); //light coral
+		iFilledRectangle(cp1-300, cp2-250, 600, 600);
+		iSetColor(245, 219, 203); //champagne pink
+		iFilledRectangle(cp1-300+15, cp2-250+15, 570, 570);
+		iSetColor(237, 123, 132); //light coral
+		iFilledRectangle(cp1-300+30, cp2-250+30, 540, 540);
+		iSetColor(245, 219, 203); //champagne pink
+		iFilledRectangle(cp1-300+45, cp2-250+45, 510, 510);
+		iSetColor(249, 42, 130); //rose
+		iFilledRectangle(cp1-300+450, cp2-250+45+20, 100, 20);
+		iSetColor(255, 255, 255);
+		iText(cp1-300+450+5, cp2-250+45+20+6, "MAIN MENU");
+		iSetColor(249, 42, 130); //rose
+		//iText(cp1-300+45+20, cp2-250+45+510-30, "drag over the bird with mouse to aim", GLUT_BITMAP_HELVETICA_18);
+		//iText(cp1-300+45+20, cp2-250+45+510-60, "Release mouse to shoot", GLUT_BITMAP_HELVETICA_18);
 		}
+
+
+		
+		
+		
+		
+		
+
 
 
 
@@ -202,9 +206,10 @@ void iDraw() {
 		// nc = 1400, nd = grh+30, draw_empire();
 		// nc = 1700, nd = grh, draw_empire();
 
-		if(sc==101) ingame_menu();
+		
 		if(sc==102) winsc();
 		if(sc==103) losesc();
+		if(sc==101) ingame_menu();
 		
 	}
 
@@ -314,11 +319,19 @@ void iMouse(int button, int state, int mx, int my) {
 
 		if(sc==1002)
 		{
-			if(mx>0 && mx<1920 && my>0 && my<1080) sc=0;
+			//cp1-300+450, cp2-250+45+20, 100, 20
+			if(mx>cp1-300+450 && mx<cp1-300+450+100 && my>cp2-250+45+20 && my<cp2-250+45+20+20)
+			{
+				sc = 0;
+			}
 		}
 		if(sc==1003)
 		{
-			if(mx>0 && mx<1920 && my>0 && my<1080) sc=0;
+			//cp1-300+450, cp2-250+45+20, 100, 20
+			if(mx>cp1-300+450 && mx<cp1-300+450+100 && my>cp2-250+45+20 && my<cp2-250+45+20+20)
+			{
+				sc = 0;
+			}
 		}
 
 
@@ -334,7 +347,7 @@ void iMouse(int button, int state, int mx, int my) {
 
 //x1
 
-		if(sc==1 ||  sc==102 || sc==103)
+		if(sc==1 || sc==103 || sc==102)
 		{
 
 			printf("%d %d hehe mouse\n", mx, my);
@@ -395,6 +408,18 @@ void iMouse(int button, int state, int mx, int my) {
 			}
 
 
+		}
+
+		if(sc==102)
+		{
+			//1720, 1010, 170, 50
+			if(mx>1720 && mx<1720+170 && my>1010 && my<1010+50)
+			{ //opnes menu
+				//iPauseTimer(t1);
+				//printf("menu open korlam\n");
+				menu_open_ache_gadhar_baccha=1;
+				sc=101;
+			}
 		}
 
 
@@ -460,14 +485,14 @@ void iKeyboard(unsigned char key) {
 		exit(0);
 	}
 
-	if(sc==1)
+	if(sc==1 || sc==101 || sc==102 || sc==103)
 	{
 		if (key == 'f') {
 			printf("\n-----%lf-----\n-----%lf-----\n\n", y, x);
 		}
 		if (key == 'h')
 		{
-				printf("\n [%d] -%d_ -%d_ -%d_ -%d_ -%d_ \n", pogo, x_pro, y_pro, u_pro, th_pro, t_pro);
+				printf("\n [%d %d] -%d_ -%d_ -%d_ -%d_ -%d_ \n", sc, pogo, x_pro, y_pro, u_pro, th_pro, t_pro);
 		}
 		if (key == 's')
 		{
@@ -510,6 +535,8 @@ void change(void) {
 	if(aatemp<=-72) aatemp=0;
 	abtemp += 3;
 	if(abtemp>3000) abtemp = -900;
+	aetemp -= 0.1;
+	if(aetemp<=-680) aetemp = 200;
 
 	if(move_bird==2)
 	{
@@ -521,7 +548,7 @@ void change(void) {
 		
 		x = birdMovePosx + ux*t;
 		y = birdMovePosy + uy*t-g*t*t;
-		t += 0.01;
+		t += 0.015;
 		//if(x>1450) iPauseTimer(t1);
 
 		
@@ -537,6 +564,7 @@ void change(void) {
 
 		if (jumpflag==6 || x-r>1920) 
 		{
+			if(x-r>1920 && byp==3) lpk[0] = 0, lpk[1] = 0;
 			prep_next();
 		}
 
@@ -554,7 +582,7 @@ void change(void) {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 int main() {
 	//printf("\n -%d_ -%d_ -%d_ -%d_ -%d_ \n", x_pro, y_pro, u_pro, th_pro, t_pro);
-	t1 = iSetTimer(t2 , change);
+	t1 = iSetTimer(5 , change);
 	iPauseTimer(t1);
 	// t2 = iSetTimer(10, )
 	//place your own initialization codes here.

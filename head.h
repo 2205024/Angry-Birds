@@ -27,6 +27,7 @@ double bded[5][2];
 double aatemp = 0, abtemp = 600;
 double desmosx = 600, desmosy = 700;
 double ab, abp;
+double aetemp = 200;
 
 
 
@@ -373,6 +374,22 @@ void draw_ladder(void)
 	}
 }
 
+void draw_cloud(void)
+{
+	double ae = aetemp, aep = 800;
+	iSetColor(225, 235, 238); //#E1EBEE marian blue (lightest)
+	iFilledEllipse(ae, aep, 100, 50);
+	iFilledEllipse(ae+300, aep-100, 100, 50);
+	iFilledEllipse(ae+800, aep-25, 100, 50);
+	iFilledEllipse(ae+1100, aep+25, 100, 50);
+	iFilledEllipse(ae+1400, aep, 100, 50);
+	iFilledEllipse(ae+1500, aep+30, 100, 50);
+	iFilledEllipse(ae+1700, aep-60, 100, 50);
+	iFilledEllipse(ae+1900, aep, 100, 50);
+	iFilledEllipse(ae+2200, aep-50, 100, 50);
+	iFilledEllipse(ae+2300, aep+50, 100, 50);
+}
+
 
 void draw_bg(void)
 {
@@ -383,6 +400,7 @@ void draw_bg(void)
 	iSetColor(225, 235, 238); //#E1EBEE marian blue (lightest)
 
 	draw_sky();
+	draw_cloud();
 
 	iSetColor(178, 13, 48); //maroon
 	iSetColor(120, 41, 37); //image maroon
@@ -722,7 +740,7 @@ void draw_birdie(int bosc)
 			double xi[3] = {x+lp[0][0]+10, x+lp[0][0]+12, x+lp[0][0]+20};
 			double yi[3] = {y+lp[0][1]-4, y+lp[0][1]+4, y+lp[0][1]}; 
 			iFilledPolygon(xi, yi, 3);
-			if(y+lp[0][1]-r <= grh) lpk[0] = 0;
+			// if(y+lp[0][1]-r <= grh) lpk[0] = 0;
 			}
 
 			if(lpk[1]==1)
@@ -735,6 +753,7 @@ void draw_birdie(int bosc)
 			double xi[3] = {x+lp[1][0]+10, x+lp[1][0]+12, x+lp[1][0]+20};
 			double yi[3] = {y+lp[1][1]-4, y+lp[1][1]+4, y+lp[1][1]};
 			iFilledPolygon(xi, yi, 3);
+			// if(y+lp[1][1]-r <= grh) lpk[1] = 0;
 			}
 
 
@@ -1676,14 +1695,14 @@ void collision(void)
 
 void pig_col(double kx, double ky, int n)
 {
-	if( (kx-x)*(kx-x) + (y-ky)*(y-ky) <= r*r )
+	if( (kx-x)*(kx-x) + (y-ky)*(y-ky) <= r*r && pigper[n]!=1)
 	{
 		pigper[n] = 1;
 		pogo = pogo + 1;
 		//ne[n][1] = 2000 ;
 		begkoma(0.8, 0.8);
 		pointo+=5;
-		if(pointo>=35) sc = 102;
+		if(pogo>=7) sc = 102;
 	}
 }
 
@@ -1704,6 +1723,8 @@ void pig_arr(void)
 	// ne[4][0] = nc[1]+150, ne[4][1] = nd[1]+r;
 	// ne[5][0] = nc[2]+62, ne[5][1] = nd[2]+165+q[2][3]+r;
 	// ne[6][0] = nc[2]+62, ne[6][1] = nd[0]+365+45+q[2][7]+r;
+	if(pogo>=7) sc = 102;
+	// if(pogo<6 && shoot_count>=5) sc = 103;
 }
 
 void permobs(void)
@@ -1732,6 +1753,15 @@ void nichborof_col(int n)
 		colper[n][2]=1;
 		pointo++;
 
+		if(n==0 && pigper[1]!=1)
+		{
+			pigper[1] = 1;
+			pogo = pogo + 1;
+			//ne[n][1] = 2000 ;
+			//begkoma(0.8, 0.8);
+			pointo+=5;
+		}
+
 		begkoma(0.7, 0.7);
 
 		while( 
@@ -1756,6 +1786,15 @@ void nichborof_col(int n)
 		q[n][2]=2000;
 		colper[n][2]=1;
 		pointo++;
+
+		if(n==0 && pigper[1]!=1)
+		{
+			pigper[1] = 1;
+			pogo = pogo + 1;
+			//ne[n][1] = 2000 ;
+			//begkoma(0.8, 0.8);
+			pointo+=5;
+		}
 
 		begkoma(0.7, 0.7);
 
@@ -1833,6 +1872,24 @@ void upborof_col(int n)
 		q[n][7]=2000;
 		colper[n][7]=1;
 		pointo++;
+
+		if(n==0 && pigper[0]!=1)
+		{
+			pigper[0] = 1;
+			pogo = pogo + 1;
+			//ne[n][1] = 2000 ;
+			//begkoma(0.8, 0.8);
+			pointo+=5;
+		}
+		if(n==2 && pigper[6]!=1)
+		{
+			pigper[6] = 1;
+			pogo = pogo + 1;
+			//ne[n][1] = 2000 ;
+			//begkoma(0.8, 0.8);
+			pointo+=5;
+		}
+
 		begkoma(0.75, 0.75);
 	}
 	else if(x > nc[n]+45 && x < nc[n]+45+45 && y-r < nd[n]+365+q[n][7]+45 && y > nd[n]+365+q[n][7]+45)
@@ -1840,6 +1897,24 @@ void upborof_col(int n)
 		q[n][7]=2000;
 		colper[n][7]=1;
 		pointo++;
+
+		if(n==0 && pigper[0]!=1)
+		{
+			pigper[0] = 1;
+			pogo = pogo + 1;
+			//ne[n][1] = 2000 ;
+			//begkoma(0.8, 0.8);
+			pointo+=5;
+		}
+		if(n==2 && pigper[6]!=1)
+		{
+			pigper[6] = 1;
+			pogo = pogo + 1;
+			//ne[n][1] = 2000 ;
+			//begkoma(0.8, 0.8);
+			pointo+=5;
+		}
+
 		begkoma(0.75, 0.75);
 	}
 	}
@@ -1960,6 +2035,31 @@ void araari_col(int n)
 		q[n][3]=2000;
 		pointo++;
 
+		if(n==1 && pigper[2]!=1)
+		{
+			pigper[2] = 1;
+			pogo = pogo + 1;
+			//ne[n][1] = 2000 ;
+			//begkoma(0.8, 0.8);
+			pointo+=5;
+		}
+		if(n==1 && pigper[3]!=1)
+		{
+			pigper[3] = 1;
+			pogo = pogo + 1;
+			//ne[n][1] = 2000 ;
+			//begkoma(0.8, 0.8);
+			pointo+=5;
+		}
+		if(n==2 && pigper[5]!=1)
+		{
+			pigper[5] = 1;
+			pogo = pogo + 1;
+			//ne[n][1] = 2000 ;
+			//begkoma(0.8, 0.8);
+			pointo+=5;
+		}
+
 		begkoma(0.8, 0.8);
 
 		while( ( (nd[n]+165+q[n][4])*(!colper[n][4]) > nd[n]+55*(!colper[n][2]) )
@@ -1980,6 +2080,31 @@ void araari_col(int n)
 		colper[n][3]=1;
 		q[n][3]=2000;
 		pointo++;
+
+		if(n==1 && pigper[2]!=1)
+		{
+			pigper[2] = 1;
+			pogo = pogo + 1;
+			//ne[n][1] = 2000 ;
+			//begkoma(0.8, 0.8);
+			pointo+=5;
+		}
+		if(n==1 && pigper[3]!=1)
+		{
+			pigper[3] = 1;
+			pogo = pogo + 1;
+			//ne[n][1] = 2000 ;
+			//begkoma(0.8, 0.8);
+			pointo+=5;
+		}
+		if(n==2 && pigper[5]!=1)
+		{
+			pigper[5] = 1;
+			pogo = pogo + 1;
+			//ne[n][1] = 2000 ;
+			//begkoma(0.8, 0.8);
+			pointo+=5;
+		}
 
 		begkoma(0.8, 0.8);
 
